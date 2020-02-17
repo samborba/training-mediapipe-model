@@ -1,0 +1,1 @@
+Training gesture recognition model with [Mediapipe Sequence](https://github.com/google/mediapipe/tree/master/mediapipe/util/sequence) and tensorflow v1.
