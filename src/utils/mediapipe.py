@@ -2,7 +2,8 @@ import ctypes
 import logging
 import os
 
-logging.basicConfig(format='[%(asctime)s] # %(message)s', level=logging.INFO)
+logging.basicConfig(filename="execution.log", filemode='a',
+                    format='[%(asctime)s] # %(message)s', level=logging.INFO)
 
 class MediapipeManager():
     def __init__(self, output_folder):
@@ -22,7 +23,7 @@ class MediapipeManager():
         if not os.path.exists(video_path):
             raise FileExistsError
 
-        logging.info("Starting mediapipe hand-tracking.")
+        logging.info("Applying mediapipe hand-tracking.")
         try:
             func.RunMPPGraph("".encode("utf-8"),
                              video_path.encode("utf-8"),

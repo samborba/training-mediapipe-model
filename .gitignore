@@ -12,3 +12,6 @@ data/
 # Mediapipe
 mediapipe/
 !mediapipe/demo_run_graph_main_out.cc
+
+# Others
+*.log
