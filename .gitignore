@@ -7,5 +7,8 @@ __pycache__/
 .vscode
 
 # Data
-data/input/
-data/output/
+data/
+
+# Mediapipe
+mediapipe/
+!mediapipe/demo_run_graph_main_out.cc

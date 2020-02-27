@@ -50,7 +50,7 @@ extern "C" ::mediapipe::Status RunMPPGraph(char* c_video_path,
   int beginIdx = video_path.rfind("/");
   std::string video_name = video_path.substr(beginIdx+1);
 
-  // Search for extension, if found, remove it
+  // Search for mp4 extension, if found, remove it
   if (video_name.find(".mp4")) {
     size_t lastindex = video_name.find_last_of(".");
     video_name = video_name.substr(0, lastindex);
