@@ -5,3 +5,7 @@ __pycache__/
 
 # IDE
 .vscode
+
+# Data
+data/input/
+data/output/
