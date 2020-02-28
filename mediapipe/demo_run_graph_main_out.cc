@@ -56,7 +56,7 @@ extern "C" ::mediapipe::Status RunMPPGraph(char* c_video_path,
     video_name = video_name.substr(0, lastindex);
   }
 
-  std::string coordinates_path = c_coordinates_path + video_name + ".txt";
+  std::string coordinates_path = c_coordinates_path + video_name + ".csv";
   std::string output_video_path = "";
 
   MP_RETURN_IF_ERROR(mediapipe::file::GetContents(
@@ -158,11 +158,9 @@ extern "C" ::mediapipe::Status RunMPPGraph(char* c_video_path,
     // Loop over landmarks list
     for (int i = 0; i < output_landmarks.landmark_size(); ++i) {
       const mediapipe::NormalizedLandmark& landmark = output_landmarks.landmark(i);
-      landmarks_coordinates << landmark.x();
-      landmarks_coordinates << " ";
-      landmarks_coordinates << landmark.y();
-      landmarks_coordinates << " ";
+      landmarks_coordinates << landmark.x() << "," << landmark.y() << ",";
     }
+    landmarks_coordinates << "\n";
   }
 
   // filetest.close();
