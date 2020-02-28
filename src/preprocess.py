@@ -6,7 +6,7 @@ from utils import MediapipeManager
 
 
 def main(input_folder):
-    logging.info("Checking input folder.")
+    logging.info("Checking input folder...")
     file_list = [files for files in glob.glob(os.path.abspath(input_folder) + "**/*.mp4",
                                               recursive=True)]
 
@@ -14,6 +14,10 @@ def main(input_folder):
         raise FileNotFoundError
 
     logging.info("%i files were found.", len(file_list))
+
+    if not os.path.exists("data/"):
+        logging.info("Creating data folder...")
+        os.mkdir("data")
 
     mediapipe = MediapipeManager("data/")
     try:
