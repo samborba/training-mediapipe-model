@@ -6,7 +6,7 @@ from utils import MediapipeManager
 
 
 def main(input_folder):
-    logging.info("Checking input folder...")
+    logging.info("Checking input folder.")
     file_list = [files for files in glob.glob(os.path.abspath(input_folder) + "**/*.mp4",
                                               recursive=True)]
     preprocess_couting = 0
@@ -35,7 +35,6 @@ def main(input_folder):
 
         logging.info("Pre-processing has been completed.")
         logging.info("Videos analyzed: %i", preprocess_couting)
-        # logging.info("Time: ")
     except ProcessLookupError:
         print(ProcessLookupError)
 
