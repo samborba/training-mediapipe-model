@@ -15,3 +15,6 @@ mediapipe/
 
 # Others
 *.log
+
+# Jupyter
+*.ipynb_checkpoints

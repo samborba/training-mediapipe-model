@@ -22,8 +22,9 @@ def main(input_folder):
         logging.info("Creating data folder...")
         os.mkdir(f"data/")
 
-    logging.info("Creating output folder for the selected dataset.")
-    os.mkdir(f"data/{new_ouput_folder}")
+    if not os.path.exists(f"data/{new_ouput_folder}"):
+        logging.info("Creating output folder for the selected dataset.")
+        os.mkdir(f"data/{new_ouput_folder}")
 
     mediapipe = MediapipeManager(f"data/{new_ouput_folder}/")
     try:
