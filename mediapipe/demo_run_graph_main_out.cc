@@ -108,6 +108,20 @@ extern "C" ::mediapipe::Status RunMPPGraph(char* c_video_path,
   LOG(INFO) << "Start grabbing and processing frames.";
   size_t frame_timestamp = 0;
   bool grab_frames = true;
+
+  // Save landmark coordinate values into a text file
+  std::ofstream landmarks_coordinates(coordinates_path, std::ios::out | std::ios_base::app);
+
+  // Initializa columns
+  for (int i = 1; i < 22; i++) {
+    if (i == 21) {
+      landmarks_coordinates << "x" + std::to_string(i) << "," << "y" + std::to_string(i);
+    } else {
+      landmarks_coordinates << "x" + std::to_string(i) << "," << "y" + std::to_string(i) << ",";
+      landmarks_coordinates << "\n";
+    }
+  }
+
   while (grab_frames) {
     // Capture opencv camera or video frame.
     cv::Mat camera_frame_raw;
@@ -151,9 +165,6 @@ extern "C" ::mediapipe::Status RunMPPGraph(char* c_video_path,
     if (save_video) {
       writer.write(output_frame_mat);
     }
-    
-    // Save landmark coordinate values into a text file
-    std::ofstream landmarks_coordinates(coordinates_path, std::ios::out | std::ios_base::app);
 
     // Loop over landmarks list
     for (int i = 0; i < output_landmarks.landmark_size(); ++i) {
