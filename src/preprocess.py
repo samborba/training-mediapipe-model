@@ -8,7 +8,7 @@ from utils import MediapipeManager
 from utils import structuring
 
 
-def main(input_folder):
+def main(input_folder, classification_label):
     logging.info("Checking input folder.")
     file_list = [files for files in glob.glob(os.path.abspath(input_folder) + "**/*.mp4",
                                               recursive=True)]
@@ -50,7 +50,10 @@ def main(input_folder):
         csv_list = [files for files in glob.glob(os.path.abspath(f"{output_folder}/*.csv"),
                                                  recursive=True)]
         for csv_path in csv_list:
-            structuring.add_label(csv_path, output_folder)
+            if classification_label is not None:
+                structuring.add_label(csv_path, output_folder, classification_label)
+            else:
+                structuring.add_label(csv_path, output_folder)
 
         logging.info(">>> Data prepation done.")
 
@@ -68,9 +71,9 @@ if __name__ == "__main__":
     parser.add_argument("-c", "--classification", help="Adds a classification for the dataset \
                         that already exists (the parameter input_data_folder must be provided, \
                         as this value is used as input).",
-                        type=str, required=False)
+                        type=str, required=False, default=None)
     arguments = parser.parse_args()
 
     input_data_path = arguments.input_data_path
     classification = arguments.classification
-    main(input_data_path)
+    main(input_data_path, classification)
