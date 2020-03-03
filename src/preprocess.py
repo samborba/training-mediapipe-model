@@ -2,16 +2,20 @@ import argparse
 import glob
 import logging
 import os
+import shutil
+
 from utils import MediapipeManager
+from utils import structuring
 
 
 def main(input_folder):
     logging.info("Checking input folder.")
     file_list = [files for files in glob.glob(os.path.abspath(input_folder) + "**/*.mp4",
                                               recursive=True)]
-    preprocess_couting = 0
-    new_ouput_folder = input_folder.split("/")[-2] if input_folder.split("/")[-1] == "" \
+    input_counting = 0
+    folder_name = input_folder.split("/")[-2] if input_folder.split("/")[-1] == "" \
                        else input_folder.split("/")[-1]
+    output_folder = f"data/{folder_name}"
 
     if len(file_list) == 0:
         raise FileNotFoundError
@@ -22,20 +26,35 @@ def main(input_folder):
         logging.info("Creating data folder...")
         os.mkdir(f"data/")
 
-    if not os.path.exists(f"data/{new_ouput_folder}"):
-        logging.info("Creating output folder for the selected dataset.")
-        os.mkdir(f"data/{new_ouput_folder}")
+    if not os.path.exists(f"data/{output_folder}"):
+        logging.info("Creating output folder for the selected dataset...")
+    else:
+        logging.info("Output folder already exist. Cleaning it up.")
+        shutil.rmtree(output_folder)
 
-    mediapipe = MediapipeManager(f"data/{new_ouput_folder}/")
+    os.mkdir(output_folder)
+
+    mediapipe = MediapipeManager(output_folder)
     try:
         for file_path in file_list:
             mediapipe.run_mediapipe(file_path)
-            preprocess_couting += 1
+            input_counting += 1
             logging.info("Done.")
-            logging.info("Progress: %.1f%%", (preprocess_couting/len(file_list)) * 100)
+            logging.info("Progress so far: %.1f%%", (input_counting/len(file_list)) * 100)
+
+        logging.info(">>> Coordinate extraction done.")
+        logging.info("Videos analyzed: %i", input_counting)
+
+        logging.info("Starting data prepation.")
+        logging.info("Adding new column to all .csv files.")
+        csv_list = [files for files in glob.glob(os.path.abspath(f"{output_folder}/*.csv"),
+                                                 recursive=True)]
+        for csv_path in csv_list:
+            structuring.add_label(csv_path, output_folder)
+
+        logging.info(">>> Data prepation done.")
 
         logging.info("Pre-processing has been completed.")
-        logging.info("Videos analyzed: %i", preprocess_couting)
     except ProcessLookupError:
         print(ProcessLookupError)
 
@@ -46,6 +65,12 @@ if __name__ == "__main__":
                         help="Folder containing files with .mp4 \
                               extension to be converted by mediapipe",
                         required=True)
+    parser.add_argument("-c", "--classification", help="Adds a classification for the dataset \
+                        that already exists (the parameter input_data_folder must be provided, \
+                        as this value is used as input).",
+                        type=str, required=False)
     arguments = parser.parse_args()
+
     input_data_path = arguments.input_data_path
+    classification = arguments.classification
     main(input_data_path)
