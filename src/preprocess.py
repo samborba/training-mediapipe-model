@@ -15,21 +15,26 @@ def main(input_folder, classification_label):
     input_counting = 0
     folder_name = input_folder.split("/")[-2] if input_folder.split("/")[-1] == "" \
                        else input_folder.split("/")[-1]
-    output_folder = f"data/{folder_name}"
+    output_folder = f"data/{folder_name}/"
+
+    mediapipe_dependencies = ["calculators", "graphs", "models"]
+
+    if not all([os.path.isdir(f"mediapipe/{dep}") for dep in mediapipe_dependencies]):
+        raise FileNotFoundError # return error
 
     if len(file_list) == 0:
         raise FileNotFoundError
 
     logging.info("%i files were found.", len(file_list))
 
-    if not os.path.exists(f"data/"):
+    if not os.path.exists(f"data"):
         logging.info("Creating data folder...")
-        os.mkdir(f"data/")
+        os.mkdir(f"data")
 
-    if not os.path.exists(f"data/{output_folder}"):
-        logging.info("Creating output folder for the selected dataset...")
+    if not os.path.exists(output_folder):
+        logging.info("Creating %s folder...", folder_name)
     else:
-        logging.info("Output folder already exist. Cleaning it up.")
+        logging.info("Output %s folder already exist. Cleaning it up...", folder_name)
         shutil.rmtree(output_folder)
 
     os.mkdir(output_folder)
@@ -56,8 +61,10 @@ def main(input_folder, classification_label):
                 structuring.add_label(csv_path, output_folder)
 
         logging.info(">>> Data prepation done.")
+        logging.info("Combining all the .csv of the dataset to serve the model.")
+        structuring.convert_to_one(output_folder)
 
-        logging.info("Pre-processing has been completed.")
+        logging.info(">>> Pre-processing has been completed.")
     except ProcessLookupError:
         print(ProcessLookupError)
 

@@ -1,1 +1,2 @@
-Training gesture recognition model with [Mediapipe Sequence](https://github.com/google/mediapipe/tree/master/mediapipe/util/sequence) and tensorflow v1.
+# Gesture Recognition with Mediapipe and KNN Algorithm
+Training machine learning model for gesture recognition with [Mediapipe Framework](https://github.com/google/mediapipe/) and K-Nearest Neighbors ([K-Neighbors Classifier](https://scikit-learn.org/stable/modules/generated/sklearn.neighbors.KNeighborsClassifier.html)) algorithm.
