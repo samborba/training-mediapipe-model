@@ -20,10 +20,10 @@ def main(input_folder, classification_label):
     mediapipe_dependencies = ["calculators", "graphs", "models"]
 
     if not all([os.path.isdir(f"mediapipe/{dep}") for dep in mediapipe_dependencies]):
-        raise FileNotFoundError # return error
+        raise Exception("Mediapipe dependencies not found.")
 
     if len(file_list) == 0:
-        raise FileNotFoundError
+        raise Exception("The provided folder does not contain any .mp4 files")
 
     logging.info("%i files were found.", len(file_list))
 
@@ -50,19 +50,19 @@ def main(input_folder, classification_label):
         logging.info(">>> Coordinate extraction done.")
         logging.info("Videos analyzed: %i", input_counting)
 
-        logging.info("Starting data prepation.")
-        logging.info("Adding new column to all .csv files.")
         csv_list = [files for files in glob.glob(os.path.abspath(f"{output_folder}/*.csv"),
                                                  recursive=True)]
-        for csv_path in csv_list:
-            if classification_label is not None:
+        if classification_label is not None:
+            logging.info("Starting data prepation.")
+            logging.info("Classifying as: %s", classification_label)
+            logging.info("Adding new column (classification) to all .csv files.")
+            for csv_path in csv_list:
                 structuring.add_label(csv_path, output_folder, classification_label)
-            else:
-                structuring.add_label(csv_path, output_folder)
+            logging.info(">>> Data prepation done.")
 
-        logging.info(">>> Data prepation done.")
-        logging.info("Combining all the .csv of the dataset to serve the model.")
-        structuring.convert_to_one(output_folder)
+        if len(file_list) > 1:
+            logging.info("Combining all the .csv file of the dataset folder to a single one.")
+            structuring.convert_to_one(output_folder)
 
         logging.info(">>> Pre-processing has been completed.")
     except ProcessLookupError:
