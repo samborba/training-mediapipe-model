@@ -24,5 +24,5 @@ if __name__ == "__main__":
                         type=str)
     arguments = parser.parse_args()
 
-    dataset_list = arguments.build
+    dataset_list = arguments.datasets_compile
     main(dataset_list)
