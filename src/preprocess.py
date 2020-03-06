@@ -9,6 +9,18 @@ from utils import structuring
 
 
 def main(input_folder, classification_label):
+    """Valid if the environment contains the files necessary for execution and starts the\
+       process of transforming a normal video into a mediapipe type.
+
+    Arguments:
+        input_folder {str} -- dataset path that contains the .mp4 videos
+        classification_label {str} -- class type of data provided
+
+    Raises:
+        Exception: Dependencies required for running Mediapipe were not found, \
+                   check github.com/google/mediapipe/
+        Exception: The folder containing the video files provided is empty
+    """
     logging.info("Checking input folder.")
     file_list = [files for files in glob.glob(os.path.abspath(input_folder) + "**/*.mp4",
                                               recursive=True)]
@@ -71,7 +83,7 @@ def main(input_folder, classification_label):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Run mediapipe framework.")
-    parser.add_argument("-i", "--input_data_path",
+    parser.add_argument("-i", "--input_dataset_path",
                         help="Folder containing files with .mp4 \
                               extension to be converted by mediapipe",
                         required=True)
@@ -81,6 +93,6 @@ if __name__ == "__main__":
                         type=str, required=False, default=None)
     arguments = parser.parse_args()
 
-    input_data_path = arguments.input_data_path
+    input_data_path = arguments.input_dataset_path
     classification = arguments.classification
     main(input_data_path, classification)
