@@ -29,7 +29,11 @@ def convert_to_one(dataset_folder):
     combine_csv.to_csv(f"{dataset_folder}/{folder_name}_dataset.csv", index=False)
 
 
-def mount_dataset():
+def mount_dataset(dataset_list):
     """Concatenate the main csv files from the datasets to a single one file, \
         where it will be used to train the model.
     """
+    dataset_list = dataset_list.split(",")
+    csv_list = [f"data/{dataset}/{dataset}_dataset.csv" for dataset in dataset_list]
+    concat_csv = pd.concat([pd.read_csv(csv, index_col=False) for csv in csv_list])
+    concat_csv.to_csv(f"data/dataset.csv", index=False)
