@@ -5,9 +5,10 @@ Training machine learning model for gesture recognition with [Mediapipe Framewor
 The purpose of this project is to explore some Machine Learning algorithms along with the Google Mediapipe framework.
   
 The "Hand Tracking" feature is used, which consists of recognition of only one hand. The c ++ file located in [here](mediapipe/demo_run_graph_main_out.cc), has been changed to instead return a new mp4 video with Mediapipe on, it will return a .csv file that contains the coordinates of the landmarks. In total there will be 21 landmarks, as they are distributed by hand in full.
-Standard Media Pipe output :
+
+#### Standard Media Pipe output:
 ![Normal output from Mediapipe](docs/images/video_wth_mediapipe.gif) 
-Modified MediaPipe output in a plot:
+#### Modified MediaPipe output in a plot:
 ![Landmarks - Hands Open](docs/images/palm.png)
 
 ## Preparing environment
