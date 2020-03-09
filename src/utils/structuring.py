@@ -1,4 +1,5 @@
 from glob import glob
+import numpy as np
 import pandas as pd
 
 
@@ -37,3 +38,18 @@ def mount_dataset(dataset_list):
     csv_list = [f"data/{dataset}/{dataset}_dataset.csv" for dataset in dataset_list]
     concat_csv = pd.concat([pd.read_csv(csv, index_col=False) for csv in csv_list])
     concat_csv.to_csv(f"data/dataset.csv", index=False)
+
+
+def get_row(path, position):
+    """Select a row in csv file
+
+    Arguments:
+        path {str} -- path to the csv file
+        position {int} -- position of the row
+
+    Returns:
+        numpy.ndarray -- array of landmarks of a frame (row)
+    """
+    df = pd.read_csv(path, index_col=False)
+    selected_row = df.iloc[position].values.tolist()
+    return np.array([selected_row[i:i+2] for i in range(0, 21, 2)])
