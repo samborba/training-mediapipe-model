@@ -5,11 +5,13 @@ Training machine learning model for gesture recognition with [Mediapipe Framewor
 The purpose of this project is to explore some Machine Learning algorithms along with the Google Mediapipe framework.
   
 The "Hand Tracking" feature is used, which consists of recognition of only one hand. The c ++ file located in [here](mediapipe/demo_run_graph_main_out.cc), has been changed to instead return a new mp4 video with Mediapipe on, it will return a .csv file that contains the coordinates of the landmarks. In total there will be 21 landmarks, as they are distributed by hand in full.
-
-#### Standard Media Pipe output:
+Standard Media Pipe output :
 ![Normal output from Mediapipe](docs/images/video_wth_mediapipe.gif) 
-#### Modified MediaPipe output in a plot:
+Modified MediaPipe output in a plot:
 ![Landmarks - Hands Open](docs/images/palm.png)
+
+### KNN Algorithm
+The k-nearest neighbors (KNN) algorithm is a simple, easy-to-implement supervised machine learning algorithm that can be used to solve both classification and regression problems. This algorithm assumes that similar things exist in close proximity. In other words, similar things are near to each other.
 
 ## Preparing environment
 To be able to initialize this project, it is necessary to have some settings configured on your machine.
@@ -39,8 +41,19 @@ $ python src/preprocess.py --input_dataset_path /path/to/dataset/ --classificati
 $ python src/build.py --datasets_compile "dataset01,dataset02,dataset003"
 ```
 
+### Try de model
+To use the model (classify a gesture recorded in the video) just perform the following steps:
+1. At **~/training-mediapipe-model/** run with the first parameter (separated by commas) to provide the input:
+ ```
+$ python src/predict.py --input_video_path "the-input-here"
+```
+
 ### Using with the Mediapipe-API
-TODO: [Mediapipe-API](https://github.com/samborba/mediapipe-api/)
+It is now possible to use this model together with the API I made earlier. Make a request to **/recognition/gesture/** endpoint with the **.mp4** file and will return a classification type. Check [Mediapipe-API](https://github.com/samborba/mediapipe-api/) for more details.
+
+## Notes
+1.   There are only 4 types of classes that the model recognizes: rock, open hand, ok and no hand;
+2. Feel free to change the model (algorithm and/or data training) and integrate into the project;
 
 ## Reference
 1. [Mediapipe](https://github.com/google/mediapipe/);
