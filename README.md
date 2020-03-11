@@ -41,7 +41,7 @@ $ python src/preprocess.py --input_dataset_path /path/to/dataset/ --classificati
 $ python src/build.py --datasets_compile "dataset01,dataset02,dataset003"
 ```
 
-### Try de model
+### Try the model
 To use the model (classify a gesture recorded in the video) just perform the following steps:
 1. At **~/training-mediapipe-model/** run with the first parameter (separated by commas) to provide the input:
  ```
