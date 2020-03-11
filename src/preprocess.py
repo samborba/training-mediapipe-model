@@ -72,9 +72,9 @@ def main(input_folder, classification_label):
                 structuring.add_label(csv_path, output_folder, classification_label)
             logging.info(">>> Data prepation done.")
 
-        if len(file_list) > 1:
-            logging.info("Combining all the .csv file of the dataset folder to a single one.")
-            structuring.convert_to_one(output_folder)
+            if len(file_list) > 1:
+                logging.info("Combining all the .csv file of the dataset folder to a single one.")
+                structuring.convert_to_one(output_folder)
 
         logging.info(">>> Pre-processing has been completed.")
     except ProcessLookupError:

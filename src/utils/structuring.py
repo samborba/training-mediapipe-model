@@ -40,7 +40,7 @@ def mount_dataset(dataset_list):
     concat_csv.to_csv(f"data/dataset.csv", index=False)
 
 
-def get_row(path, position):
+def get_row(dataframe, position):
     """Select a row in csv file
 
     Arguments:
@@ -50,6 +50,5 @@ def get_row(path, position):
     Returns:
         numpy.ndarray -- array of landmarks of a frame (row)
     """
-    df = pd.read_csv(path, index_col=False)
-    selected_row = df.iloc[position].values.tolist()
-    return np.array([selected_row[i:i+2] for i in range(0, 21, 2)])
+    selected_row = dataframe.iloc[position].values.tolist()
+    return np.array([selected_row[i:i+2] for i in range(0, 42, 2)])

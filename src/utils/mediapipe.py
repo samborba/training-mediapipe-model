@@ -22,7 +22,7 @@ class MediapipeManager():
         self._graph_path = "mediapipe/graphs/hand_tracking/hand_tracking_desktop_live.pbtxt".encode("utf-8")
         self._binary_path = os.path.abspath("src/lib/coordinates_mediapipe.so").encode("utf-8")
 
-    def run_mediapipe(self, video_path):
+    def run_mediapipe(self, video_path, name=None):
         """Apply the Media Pipe Framework to the provide video.
 
         Arguments:
